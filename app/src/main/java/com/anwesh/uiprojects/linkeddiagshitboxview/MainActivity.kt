@@ -3,12 +3,13 @@ package com.anwesh.uiprojects.linkeddiagshitboxview
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import com.anwesh.uiprojects.diagshiftboxview.DiagShiftBoxView
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        DiagShiftBoxView.create(this)
         fullScreen()
     }
 }
