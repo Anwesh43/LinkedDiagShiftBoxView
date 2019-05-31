@@ -21,7 +21,7 @@ val strokeFactor : Int = 90
 val sizeFactor : Float = 2.9f
 val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
-val rotDeg : Float = 90f
+val rotDeg : Float = 45f
 val boxHFactor : Float = 4f
 val arcFactor : Float = 3f
 val offsetFactor : Float = 3f
@@ -45,9 +45,9 @@ fun Canvas.drawRotLine(i : Int, sc : Float, x : Float, size : Float, paint : Pai
     restore()
 }
 
-fun Canvas.drawProgressArc(size : Float, scale : Float, h : Float, paint : Paint) {
+fun Canvas.drawProgressArc(size : Float, scale : Float, w : Float, paint : Paint) {
     save()
-    translate(0f, -h / offsetFactor)
+    translate( -w /  (2 * offsetFactor), 0f)
     drawArc(RectF(-size / arcFactor, -size / arcFactor, size / arcFactor, size / arcFactor),
             0f, sweepDeg * scale, true, paint)
     restore()
@@ -63,8 +63,8 @@ fun Canvas.drawDSBNode(i : Int, scale : Float, paint : Paint) {
     paint.color = foreColor
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     paint.strokeCap = Paint.Cap.ROUND
-    var x : Float = 0f
-    val xGap : Float = 2 * size / (lines)
+    var x : Float = -size
+    val xGap : Float = 2 * size / (lines + 1)
     save()
     translate(w / 2, gap * (i + 1))
     drawProgressArc(size, scale, h, paint)
@@ -161,7 +161,7 @@ class DiagShiftBoxView(ctx : Context) : View(ctx) {
 
         fun draw(canvas : Canvas, paint : Paint) {
             canvas.drawDSBNode(i, state.scale, paint)
-            prev?.draw(canvas, paint)
+            next?.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
