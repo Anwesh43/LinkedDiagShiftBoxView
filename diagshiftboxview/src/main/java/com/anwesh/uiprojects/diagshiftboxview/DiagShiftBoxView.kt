@@ -23,6 +23,9 @@ val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
 val rotDeg : Float = 90f
 val boxHFactor : Float = 4f
+val arcFactor : Float = 3f
+val offsetFactor : Float = 3f
+val sweepDeg : Float = 360f
 
 fun Int.inverse() : Float = 1f / this
 fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
@@ -42,6 +45,14 @@ fun Canvas.drawRotLine(i : Int, sc : Float, x : Float, size : Float, paint : Pai
     restore()
 }
 
+fun Canvas.drawProgressArc(size : Float, scale : Float, h : Float, paint : Paint) {
+    save()
+    translate(0f, -h / offsetFactor)
+    drawArc(RectF(-size / arcFactor, -size / arcFactor, size / arcFactor, size / arcFactor),
+            0f, sweepDeg * scale, true, paint)
+    restore()
+}
+
 fun Canvas.drawDSBNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
@@ -56,6 +67,7 @@ fun Canvas.drawDSBNode(i : Int, scale : Float, paint : Paint) {
     val xGap : Float = 2 * size / (lines)
     save()
     translate(w / 2, gap * (i + 1))
+    drawProgressArc(size, scale, h, paint)
     for (j in 0..(lines - 1)) {
         x += xGap * sc1.divideScale(j, lines)
         drawRotLine(j, sc2, x, size, paint)
