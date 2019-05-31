@@ -117,7 +117,7 @@ class DiagShiftBoxView(ctx : Context) : View(ctx) {
             }
         }
 
-        fun start(cb : () -> Unit) {
+        fun start() {
             if (!animated) {
                 animated = true
                 view.postInvalidate()
@@ -218,6 +218,15 @@ class DiagShiftBoxView(ctx : Context) : View(ctx) {
             dsb.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity : Activity) : DiagShiftBoxView {
+            val view : DiagShiftBoxView = DiagShiftBoxView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
