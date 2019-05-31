@@ -197,4 +197,26 @@ class DiagShiftBoxView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : DiagShiftBoxView) {
+
+        private val animator : Animator = Animator(view)
+        private val dsb : DiagShiftBox = DiagShiftBox(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            dsb.draw(canvas, paint)
+            animator.animate {
+                dsb.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            dsb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
